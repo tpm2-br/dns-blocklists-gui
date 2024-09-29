@@ -1,3 +1,6 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#[cfg(windows)]
+extern crate winapi;
 mod gui;
 mod bloqueador;
 mod config;

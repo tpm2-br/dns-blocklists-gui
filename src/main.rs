@@ -5,6 +5,9 @@ mod gui;
 mod bloqueador;
 mod config;
 use eframe::egui;
+use std::fs::File;
+use std::io::Read;
+use std::sync::Arc; 
 const WINDOW_WIDTH: f32 = 400.0;
 const WINDOW_HEIGHT: f32 = 600.0;
 
@@ -27,12 +30,23 @@ impl eframe::App for AplicativoBloqueador {
     }
 }
 fn main() -> Result<(), eframe::Error> {
-    let opcoes = eframe::NativeOptions {
+    let mut opcoes = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
             .with_inner_size([WINDOW_WIDTH, WINDOW_HEIGHT])
             .with_resizable(false),
         ..Default::default()
     };
+        // up ícone
+        let mut dados_icone = Vec::new();
+        if let Ok(mut file) = File::open("icon.ico") {
+            if file.read_to_end(&mut dados_icone).is_ok() {
+                opcoes.viewport.icon = Some(Arc::new(egui::IconData {
+                    rgba: dados_icone,
+                    width: 128, 
+                    height: 128,
+                }));
+            }
+        }
 
     eframe::run_native(
         "DNS-Blocklists GUI",

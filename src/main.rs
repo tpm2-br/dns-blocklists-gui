@@ -6,6 +6,8 @@ mod bloqueador;
 mod config;
 use eframe::egui;
 use std::fs::File;
+use std::io::BufReader;
+use rodio::{Decoder, OutputStream, source::Source};
 use std::io::Read;
 use std::sync::Arc; 
 const WINDOW_WIDTH: f32 = 400.0;
@@ -36,6 +38,11 @@ fn main() -> Result<(), eframe::Error> {
             .with_resizable(false),
         ..Default::default()
     };
+        // up musica background
+        let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+        let file = File::open("im-alone.mp3").unwrap();
+        let source = Decoder::new(BufReader::new(file)).unwrap();
+        stream_handle.play_raw(source.convert_samples()).unwrap();
         // up ícone
         let mut dados_icone = Vec::new();
         if let Ok(mut file) = File::open("icon.ico") {

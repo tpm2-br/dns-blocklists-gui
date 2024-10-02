@@ -6,7 +6,8 @@ Como usar? <br>
 2- Selecionar a lista <br>
 3- Salvar <br>
 
-![image](https://github.com/user-attachments/assets/ae8814ff-de63-4848-be0e-408ce9933a1c)
+![image](https://github.com/user-attachments/assets/17696b33-476b-45c4-9566-af8e02344826)
+
 
 
 Como limpar a lista hosts? <br>

@@ -33,12 +33,16 @@ impl eframe::App for InterfaceBloqueador {
             });
 
             egui::ScrollArea::vertical().show(ui, |ui| {
-                for (indice, (nome, _)) in URLS.iter().enumerate() {
+                for (indice, (nome, _url, explicacao)) in URLS.iter().enumerate() {
                     ui.add_space(10.0);
                     ui.horizontal(|ui| {
                         ui.add(egui::Checkbox::new(&mut self.selecionados[indice], ""))
                             .on_hover_text(format!("Selecionar {}", nome));
-                        ui.label(nome.to_string());
+                        ui.label(nome.to_string())
+                        .on_hover_ui(|ui| {
+                            ui.label(explicacao.to_string()); // explicar m.
+                        });
+                        
                     });
                 }
             });
@@ -59,7 +63,7 @@ impl eframe::App for InterfaceBloqueador {
                             Err(e) => self.status.push_str(&format!("Erro ao limpar o arquivo hosts: {}\n", e)),
                         }
                     } else {
-                        for (indice, (_, url)) in URLS.iter().enumerate() {
+                        for (indice, (_nome, url, _)) in URLS.iter().enumerate() {
                             if self.selecionados[indice] {
                                 let resultado = self.bloqueador.bloquear_hosts(url);
                                 self.status.push_str(&format!("{}\n", resultado));
